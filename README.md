@@ -7,6 +7,9 @@ of my classes.
 
 Inspired by this, I aimed to create a similar feature with this extension.
 
+## Author
+Avik Roy
+
 ## Features
 Aggregates assignments from Canvas (project files show request/processing code).
 
