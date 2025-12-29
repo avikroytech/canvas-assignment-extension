@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canvas Dashboard</title>
+
+  <!-- Tailwind -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.svg">
+
+  <!-- Premium font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    body {
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    }
+
+    /* Dark themed scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #262626;
+      border-radius: 999px;
+      border: 2px solid #0a0a0a;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3f3f46;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
+  <main class="max-w-6xl mx-auto px-6 py-10 space-y-12">
+
+    <!-- Header -->
+    <header class="text-center space-y-1">
+      <h1 class="text-3xl font-semibold tracking-tight text-white">
+        Canvas Assignments
+      </h1>
+    </header>
+
+    <!-- Configuration -->
+    <section class="rounded-2xl border border-neutral-800 bg-neutral-900/70 backdrop-blur p-8 space-y-8">
+      <h2 class="text-lg font-semibold">Configuration</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm text-neutral-400 mb-2">Canvas Base URL</label>
+          <input
+            id="baseUrl"
+            type="text"
+            placeholder="https://school.instructure.com"
+            class="w-full rounded-lg bg-neutral-800 border border-neutral-700 px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm text-neutral-400 mb-2">Access Token</label>
+          <input
+            id="token"
+            type="password"
+            placeholder="Canvas API token"
+            class="w-full rounded-lg bg-neutral-800 border border-neutral-700 px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500"
+          />
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="text-sm font-medium text-neutral-300">
+          Courses (ID + Color)
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="flex gap-3">
+            <input id="course1" placeholder="Course ID" class="flex-1 rounded-lg bg-neutral-800 border border-neutral-700 px-3 py-2 text-sm" />
+            <input id="color1" type="color" value="#ef4444" class="w-12 h-10 rounded-lg bg-neutral-800 border border-neutral-700" />
+          </div>
+          <div class="flex gap-3">
+            <input id="course2" placeholder="Course ID" class="flex-1 rounded-lg bg-neutral-800 border border-neutral-700 px-3 py-2 text-sm" />
+            <input id="color2" type="color" value="#f59e0b" class="w-12 h-10 rounded-lg bg-neutral-800 border border-neutral-700" />
+          </div>
+          <div class="flex gap-3">
+            <input id="course3" placeholder="Course ID" class="flex-1 rounded-lg bg-neutral-800 border border-neutral-700 px-3 py-2 text-sm" />
+            <input id="color3" type="color" value="#10b981" class="w-12 h-10 rounded-lg bg-neutral-800 border border-neutral-700" />
+          </div>
+          <div class="flex gap-3">
+            <input id="course4" placeholder="Course ID" class="flex-1 rounded-lg bg-neutral-800 border border-neutral-700 px-3 py-2 text-sm" />
+            <input id="color4" type="color" value="#3b82f6" class="w-12 h-10 rounded-lg bg-neutral-800 border border-neutral-700" />
+          </div>
+          <div class="flex gap-3">
+            <input id="course5" placeholder="Course ID" class="flex-1 rounded-lg bg-neutral-800 border border-neutral-700 px-3 py-2 text-sm" />
+            <input id="color5" type="color" value="#8b5cf6" class="w-12 h-10 rounded-lg bg-neutral-800 border border-neutral-700" />
+          </div>
+          <div class="flex gap-3">
+            <input id="course6" placeholder="Course ID" class="flex-1 rounded-lg bg-neutral-800 border border-neutral-700 px-3 py-2 text-sm" />
+            <input id="color6" type="color" value="#ec4899" class="w-12 h-10 rounded-lg bg-neutral-800 border border-neutral-700" />
+          </div>
+        </div>
+      </div>
+
+      <button
+        id="save"
+        class="inline-flex items-center rounded-lg bg-blue-600 hover:bg-blue-500 px-6 py-2.5 text-sm font-medium transition"
+      >
+        Save & Load Assignments
+      </button>
+    </section>
+
+    <!-- Assignments -->
+    <section class="rounded-2xl border border-neutral-800 bg-neutral-900/70 backdrop-blur p-8 space-y-10">
+      <h2 class="text-lg font-semibold">Assignments</h2>
+
+      <!-- Past Due -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-medium flex items-center gap-2">
+            <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+            Past Due
+          </h3>
+          <span id="past-due-count" class="text-xs px-3 py-1 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">
+            0
+          </span>
+        </div>
+        <div id="past-due" class="space-y-3"></div>
+      </div>
+
+      <!-- Upcoming -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-medium flex items-center gap-2">
+            <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+            Upcoming
+          </h3>
+          <span id="upcoming-count" class="text-xs px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+            0
+          </span>
+        </div>
+        <div id="upcoming" class="space-y-3"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
